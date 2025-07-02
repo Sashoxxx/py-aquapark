@@ -14,16 +14,16 @@ class IntegerRange:
     def __set_name__(self, owner: type, name: str) -> None:
         self.protected_name = "_" + name
 
-    def __get__(self, instance: object, owner: type) -> Union[int, None]:
+    def __get__(self, instance: object, owner: type) -> Union[int, object]:
         if instance is None:
-            return None
+            return self
         return getattr(instance, self.protected_name)
 
     def __set__(self, instance: object, value: int) -> None:
         if not isinstance(value, int) or type(value) is bool:
             raise TypeError()
         elif not self.min_amount <= value <= self.max_amount:
-            raise ValueError
+            raise ValueError()
         setattr(instance, self.protected_name, value)
 
 
